@@ -1,0 +1,29 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity LFSR is
+    Port (
+        clk : in STD_LOGIC;
+        rst : in STD_LOGIC;
+        lfsr_out : out STD_LOGIC_VECTOR(7 downto 0)
+    );
+end LFSR;
+
+architecture Behavioral of LFSR is
+    signal lfsr : STD_LOGIC_VECTOR(7 downto 0) := "10101010";
+begin
+    process(clk, rst)
+    begin
+        if rst = '1' then
+            lfsr <= "10101010";
+        elsif rising_edge(clk) then
+            lfsr <= lfsr(6 downto 0) & (lfsr(7) xor lfsr(5));
+        end if;
+    end process;
+
+    lfsr_out <= lfsr;
+end Behavioral;
+
+
+---
